@@ -18,7 +18,7 @@
         let days=date.getDate()
         let gone=`${year}-${mont}-${days}`
         // console.log(gone)
-        fetch(`https://numbersapi.com/${mont}/${days}/date?json`).then(a=>a.json()).then(b=>{
+        fetch(`https://cors-anywhere.herokuapp.com/http://numbersapi.com/${mont}/${days}/date?json`).then(a=>a.json()).then(b=>{
             // console.log(b)
             $('.art1').text(b.text)
         })
