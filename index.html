@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tonynews</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <div class="arti">
+        <div class="art1"></div>
+        <div class="art2"></div>
+    </div>
+    <script>
+        let date=new Date()
+        let year=date.getFullYear()
+        let mont=date.getMonth()+1
+        let days=date.getDate()
+        let gone=`${year}-${mont}-${days}`
+        // console.log(gone)
+        fetch(`http://numbersapi.com/${mont}/${days}/date?json`).then(a=>a.json()).then(b=>{
+            // console.log(b)
+            $('.art1').text(b.text)
+        })
+    </script>
+</body>
+</html>
