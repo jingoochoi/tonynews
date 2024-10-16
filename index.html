@@ -4,12 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tonynews</title>
+    <style>
+        html,body{width: 1000px;margin: 0 auto;}
+        .line{padding: 30px;}
+        .zzza{text-align: right;font-size: 10px;}
+        .arti{display: flex;}
+        .art1,.art2{width: 500px;padding: 30px;}
+    </style>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
+    <div class="line">
+        <div class="logo"></div>
+        <div class="zzza"></div>
+    </div>
+    <hr>
     <div class="arti">
-        <div class="art1"></div>
-        <div class="art2"></div>
+        <div class="art1">
+            <div class="ttl1" style="font-weight: bold;font-size: 20px;"></div>
+            <div class="con1"></div>
+        </div>
+        <div class="art2">
+            <div class="ttl2" style="font-weight: bold;font-size: 20px;"></div>
+            <div class="con2"></div>
+        </div>
     </div>
     <script>
         let date=new Date()
@@ -18,9 +36,27 @@
         let days=date.getDate()
         let gone=`${year}-${mont}-${days}`
         // console.log(gone)
-        fetch(`https://api.allorigins.win/get?url=http://numbersapi.com/${mont}/${days}/date?json`).then(a=>a.json()).then(b=>{
+        fetch(`https://ko.wikipedia.org/w/api.php?action=parse&page=${10}월 ${20}일&format=json&prop=text&origin=*`).then(a=>a.json()).then(b=>{
             // console.log(b)
-            $('.art1').text(b.text)
+            let bb=b.parse.text['*']
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(bb, 'text/html');
+            const eventsList = doc.querySelectorAll('ul');
+            let events = [];
+            eventsList.forEach(list => {
+            const items = list.querySelectorAll('li');
+            items.forEach(item => {
+                events.push(item.textContent); // 각 사건을 배열에 추가
+            });
+            });
+            $('.zzza').html(`${events[0]}<br>${events[1]}<br>${events[2]}`)
+        })
+        fetch('https://api.currentsapi.services/v1/latest-news?language=ko&apiKey=SFVoIWcSI31msuOLHRRwUKhQy_-NLbV8KLmQmYZ8_0nHMgMg').then(p=>p.json()).then(q=>{
+            console.log(q)
+            $('.ttl1').text(q.news[0].title)
+            $('.con1').html(`${q.news[0].description}<br><a href='${q.news[0].url}'>기사본문 (출처:${q.news[0].author})</a>`)
+            $('.ttl2').text(q.news[1].title)
+            $('.con2').html(`${q.news[1].description}<br><a href='${q.news[1].url}'>기사본문 (출처:${q.news[1].author})</a>`)
         })
     </script>
 </body>
