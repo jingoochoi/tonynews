@@ -12,7 +12,7 @@
         .arti{display: grid;grid-template-columns: repeat(2,1fr);}
         .art1,.art2,.art3,.art4{padding: 30px;}
         @media screen and (max-width:600px) {
-            html,body{max-width: 600px;}
+            html,body{width: 300px;}
             .line{flex-direction: column;justify-content: center;align-items: center;}
             .zzza{text-align: center;}
             .arti{display: flex;flex-direction: column;}
@@ -51,7 +51,7 @@
         let days=date.getDate()
         let gone=`${year}-${mont}-${days}`
         // console.log(gone)
-        fetch(`https://ko.wikipedia.org/w/api.php?action=parse&page=${10}월 ${20}일&format=json&prop=text&origin=*`).then(a=>a.json()).then(b=>{
+        fetch(`https://ko.wikipedia.org/w/api.php?action=parse&page=${mont}월 ${days}일&format=json&prop=text&origin=*`).then(a=>a.json()).then(b=>{
             // console.log(b)
             let bb=b.parse.text['*']
             const parser = new DOMParser();
