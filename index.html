@@ -6,16 +6,23 @@
     <title>tonynews</title>
     <style>
         html,body{width: 1000px;margin: 0 auto;}
-        .line{padding: 30px;}
-        .zzza{text-align: right;font-size: 10px;}
-        .arti{display: flex;}
-        .art1,.art2{width: 500px;padding: 30px;}
+        .line{padding: 30px;display: flex;justify-content: space-between;}
+        .logo img{width: 200px;}
+        .zzza{text-align: right;font-size: 13px;}
+        .arti{display: grid;grid-template-columns: repeat(2,1fr);}
+        .art1,.art2,.art3,.art4{padding: 30px;}
+        @media screen and (max-width:600px) {
+            html,body{max-width: 600px;}
+            .line{flex-direction: column;justify-content: center;align-items: center;}
+            .zzza{text-align: center;}
+            .arti{display: flex;flex-direction: column;}
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
     <div class="line">
-        <div class="logo"></div>
+        <div class="logo"><img src="tonynews.png" alt="tonynews"></div>
         <div class="zzza"></div>
     </div>
     <hr>
@@ -27,6 +34,14 @@
         <div class="art2">
             <div class="ttl2" style="font-weight: bold;font-size: 20px;"></div>
             <div class="con2"></div>
+        </div>
+        <div class="art3">
+            <div class="ttl3" style="font-weight: bold;font-size: 20px;"></div>
+            <div class="con3"></div>
+        </div>
+        <div class="art4">
+            <div class="ttl4" style="font-weight: bold;font-size: 20px;"></div>
+            <div class="con4"></div>
         </div>
     </div>
     <script>
@@ -49,14 +64,14 @@
                 events.push(item.textContent); // 각 사건을 배열에 추가
             });
             });
-            $('.zzza').html(`${events[0]}<br>${events[1]}<br>${events[2]}`)
+            $('.zzza').html(`${gone}<br><br>${events[0]}<br>${events[1]}<br>${events[2]}`)
         })
         fetch('https://api.currentsapi.services/v1/latest-news?language=ko&apiKey=SFVoIWcSI31msuOLHRRwUKhQy_-NLbV8KLmQmYZ8_0nHMgMg').then(p=>p.json()).then(q=>{
             console.log(q)
-            $('.ttl1').text(q.news[0].title)
-            $('.con1').html(`${q.news[0].description}<br><a href='${q.news[0].url}'>기사본문 (출처:${q.news[0].author})</a>`)
-            $('.ttl2').text(q.news[1].title)
-            $('.con2').html(`${q.news[1].description}<br><a href='${q.news[1].url}'>기사본문 (출처:${q.news[1].author})</a>`)
+            for (let i = 0; i < 4; i++) {
+                $(`.ttl${i+1}`).text(q.news[i].title)
+                $(`.con${i+1}`).html(`${q.news[i].description}<br><a href='${q.news[i].url}'>기사본문 (출처:${q.news[i].author})</a>`)
+            }
         })
     </script>
 </body>
